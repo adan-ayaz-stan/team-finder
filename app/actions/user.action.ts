@@ -1,48 +1,60 @@
 import prisma from "../../lib/prismadb";
-import { CreateUserParams } from "./shared.types";
+import { UpdateUserParams, GetUserByCategoryParams, User } from "./shared.types";
 
-export async function createUser(userData: CreateUserParams) {
-  try {
-    const newUser = await prisma.user.create({
-      data: {
-        name: userData.name,
-        email: userData.email,
-        discordUsername: userData.discordUsername,
-        bio: userData.bio,
-        techStack: userData.techStack || [],
-        category: userData.category,
+
+
+export async function getUserProfile(userId: string): Promise<User> {  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      include: {
+        team: true, // Include team information if needed
       },
     });
-    return newUser;
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return user;
   } catch (error) {
-    console.error("Failed to create User", error);
-    throw new Error('Failed to create User');
+    console.error('Error fetching user profile:', error);
+    throw new Error('Failed to retrieve user profile');
   }
 }
 
-export async function getUserProfile() {
+
+export async function updateProfile(params: UpdateUserParams) {
   try {
-  } catch (error) {}
+    const updateuser = await prisma.user.update({
+      where: { email: params.email },
+      data: {
+        name: params.name,
+        discordUsername: params.discordUsername,
+        bio: params.bio,
+        techStack: params.techStack,
+        category: params.category,
+      },
+    });
+    return updateuser;
+  } catch (error) {
+    console.error("Failed to update profile:", error);
+    throw new Error("Failed to update profile");
+  }
 }
 
-export async function updateProfile(req, res) {
+export async function getUsersByCategory(params: GetUserByCategoryParams) {
   try {
-    const {
-      id,
-      name,
-      email,
-      image,
-      hashedPassword,
-      discordUsername,
-      bio,
-      techStack,
-      category,
-      teamId,
-    } = req.body;
-  } catch (error) {}
-}
+    const { category } = params;
 
-export async function getUsers() {
-  try {
-  } catch (error) {}
+    const users = await prisma.user.findMany({
+      where: {
+        category: category || undefined,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to fetch users:", error);
+    throw new Error("Failed to fetch users");
+  }
 }
