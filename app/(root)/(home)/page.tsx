@@ -2,7 +2,7 @@ import React from 'react'
 
 // import Landing from "@/components/Landing";
 import Landing from "../../components/Landing";
-import HeroSection from "../../components/HeroSection"
+
 
 const page = () => {
   return (
@@ -11,7 +11,7 @@ const page = () => {
 
 
       {/* <Landing /> */}
-      <HeroSection />
+      <Landing />
        main
     </div>
   )
