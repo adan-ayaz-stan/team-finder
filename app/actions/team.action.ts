@@ -1,12 +1,13 @@
-import { create } from "domain";
 import prisma from "../../lib/prismadb"
 
-export async function createTeam(userId: string, teamName: string) {
+export async function createTeam(userId, teamName, description, rolesNeeded) {
     try {
-
-        const team = await prisma.team.createTeam({
+        const team = await prisma.team.create({
             data: {
                 name: teamName,
+                description: description,
+                rolesNeeded: rolesNeeded,
+                creatorId: userId,
                 members: {
                     connect: {
                         id: userId,
@@ -23,7 +24,7 @@ export async function createTeam(userId: string, teamName: string) {
     }
 }
 
-export async function getTeams(filter?: string) {
+export async function getTeams(filter) {
     try {
         const teams = await prisma.team.findMany({
             where: {
@@ -33,34 +34,26 @@ export async function getTeams(filter?: string) {
                 },
             },
             include: {
-                members: {
-                    include: {
-                        user: true,
-                    },
-                },
+                members: true,
             },
         });
         return teams;
     
     } catch (error) {
         console.error(error);
-        throw new Error("Failed to get teams. Please enter a valid team id");
+        throw new Error("Failed to get teams. Please enter a valid team id.");
     }
 }
 
-export async function joinTeam(userId: string, teamId: string) {
+export async function joinTeam(userId, teamId) {
     try {
-        const team = await prisma.team.update({
-            where: { id: teamId },
+        const user = await prisma.user.update({
+            where: { id: userId },
             data: {
-              members: {
-                create: {
-                  userId: userId,
-                },
-              },
+                teamId: teamId,
             },
-          });
-          return team;
+        });
+        return user;
 
     } catch (error) {
         console.error(error);
@@ -68,43 +61,30 @@ export async function joinTeam(userId: string, teamId: string) {
     }
 }
 
-export async function leaveTeam(userId: string, teamId: string) {
+export async function leaveTeam(userId) {
     try {
-        const team = await prisma.team.update({
-            where: { id: teamId },
+        const user = await prisma.user.update({
+            where: { id: userId },
             data: {
-              members: {
-                deleteMany: {
-                  userId_teamId: {
-                    userId: userId,
-                    teamId: teamId,
-                  },
-                },
-              },
+                teamId: null,
             },
-          });
-          return team;
-        } catch (error) {
-          console.error(error);
-          throw new Error("Failed to leave team.");
+        });
+        return user;
+
+    } catch (error) {
+        console.error(error);
+        throw new Error("Failed to leave team.");
     }
 }
 
-export async function getTeamMembers(teamId: string) {
+export async function getTeamMembers(teamId) {
     try {
-        const team = await prisma.team.findUnique({
-            where: {id: teamId},
-            include: {
-                members: {
-                    include: {
-                        user: true,
-                    },
-                },
-            },
+        const members = await prisma.user.findMany({
+            where: { teamId: teamId },
         });
-        return team? team.members: [];
+        return members;
     } catch (error) {
         console.error(error);
-        throw new Error("Failed to get team members. Please enter a valid team id");
+        throw new Error("Failed to get team members. Please enter a valid team id.");
     }
 }
