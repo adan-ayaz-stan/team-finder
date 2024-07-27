@@ -1,6 +1,30 @@
 import prisma from "../../lib/prismadb";
 import { UpdateUserParams, GetUserByCategoryParams, User } from "./shared.types";
 
+export async function getUserProfile() {
+  try {
+  } catch (error) {}
+}
+
+export async function updateProfile(req, res) {
+  try {
+    const {
+      id,
+      name,
+      email,
+      image,
+      hashedPassword,
+      discordUsername,
+      bio,
+      techStack,
+      category,
+      teamId,
+    } = req.body;
+
+
+  } catch (error) {}
+}
+
 
 
 export async function getUserProfile(userId: string): Promise<User> {  try {

@@ -1,4 +1,3 @@
-// types.ts
 
 export interface User {
     id: string;
@@ -23,12 +22,14 @@ export interface User {
   }
   
 
+
 export interface GetAllUsersParams {
   page?: number;
   pageSize?: number;
   filter?: string;
   searchQuery?: string; // Add searchQuery parameter
 }
+
 
 export interface CreateUserParams {
     name: string;
@@ -51,3 +52,4 @@ export interface UpdateUserParams {
 export interface GetUserByCategoryParams {
     category?: string;
   }
+
