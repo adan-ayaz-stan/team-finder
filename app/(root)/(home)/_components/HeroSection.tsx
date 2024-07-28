@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Atom, UsersRound, Zap } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const data = [
   {
@@ -61,13 +62,17 @@ export default function HeroSection() {
             src="/images/hero-image.png"
             alt="Polka Dot SVG"
             className="h-[400px] w-[400px] lg:h-[500px] lg:w-[500px] object-cover"
+            width={500}
+            height={500}
           />
         </div>
       </div>
 
       <div className="group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-fr gap-[1px] pt-[1px] bg-gray-300 border-b-[1px] border-gray-300">
         <div className="flex items-center justify-center bg-white rounded-tr-md">
-          <Button className="rounded-md">Get Started</Button>
+          <Link href={"/sign-in"}>
+            <Button className="rounded-md">Get Started</Button>
+          </Link>
         </div>
         {data.map((ele) => (
           <div
