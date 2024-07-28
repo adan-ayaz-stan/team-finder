@@ -20,7 +20,8 @@ model User {
   category        UserCategory
 
   teamId          String @db.ObjectId
-  team            Team @relation(fields: [teamId], references: [id])
+  team            Team @relation(fields: [teamId], references: [id]) 
+
 }
 
 enum UserCategory {
@@ -32,10 +33,21 @@ model Team {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   description  String
-  rolesNeeded  String[]
+  location     String
   createdAt    DateTime @default(now())
 
-  creatorId    String   @db.ObjectId
-  members      User[]   
+  // creatorId    String   @db.ObjectId
 
+  members              User[]   
+  requiredRoles        Role[]
+
+}
+
+model Role {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  roleTitle    String[]
+  skillNeeded  String[]
+
+  teamId       String   @db.ObjectId
+  team         Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
 }
