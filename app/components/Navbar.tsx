@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -7,7 +8,9 @@ export default function Navbar() {
       <h2 className="text-white">Logo</h2>
 
       {/* Login Button */}
-      <Button variant="outline">Login</Button>
+      <Link href={"/sign-in"}>
+        <Button variant="outline">Login</Button>
+      </Link>
     </div>
   );
 }

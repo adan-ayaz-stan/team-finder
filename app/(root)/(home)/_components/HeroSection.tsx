@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Atom, UsersRound, Zap } from "lucide-react";
+import Image from "next/image";
 
 const data = [
   {
@@ -56,7 +57,7 @@ export default function HeroSection() {
             }}
           />
 
-          <img
+          <Image
             src="/images/hero-image.png"
             alt="Polka Dot SVG"
             className="h-[400px] w-[400px] lg:h-[500px] lg:w-[500px] object-cover"
