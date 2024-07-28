@@ -5,6 +5,7 @@ import {
   
   const isProtectedRoute = createRouteMatcher([
     '/dashboard(.*)',
+    '/team-card(.*)'
   ]);
   
   export default clerkMiddleware((auth, req) => {
