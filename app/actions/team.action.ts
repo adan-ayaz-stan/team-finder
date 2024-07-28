@@ -1,49 +1,62 @@
 import prisma from "../../lib/prismadb"
+import { TeamData, FilterParams } from "./shared.types";
 
-export async function createTeam(userId, teamName, description, rolesNeeded) {
-    try {
-        const team = await prisma.team.create({
-            data: {
-                name: teamName,
-                description: description,
-                rolesNeeded: rolesNeeded,
-                creatorId: userId,
-                members: {
-                    connect: {
-                        id: userId,
-                    },
-                },
-            },
-        });
 
-        return team;
-    
-    } catch (error) {
-        console.error(error);
-        throw new Error("Failed to create team with the given name. Please try again with a different name.");
-    }
+export async function createTeam(teamData: TeamData) {
+  try {
+    const team = await prisma.team.create({
+      data: {
+        name: teamData.name,
+        description: teamData.description,
+        location: teamData.location,
+        requiredRoles: {
+          create: teamData.requiredRoles.map(role => ({
+            roleTitle: role.roleTitle,
+            skillNeeded: role.skillNeeded,
+          })),
+        },
+      },
+      include: {
+        roles: true,
+      },
+    });
+
+    return team;
+  } catch (error) {
+    console.error("Failed to create team:", error);
+    throw new Error("Failed to create team");
+  }
 }
 
-export async function getTeams(filter) {
+
+export async function findTeams(filters: FilterParams) {
     try {
-        const teams = await prisma.team.findMany({
-            where: {
-                name: {
-                    contains: filter,
-                    mode: 'insensitive',
-                },
+      const teams = await prisma.team.findMany({
+        where: {
+          location: filters.location,
+          requiredRoles: {
+            some: {
+              roleTitle: {
+                hasSome: filters.roleTitle,
+              },
+              skillNeeded: {
+                hasSome: filters.skillNeeded,
+              },
             },
-            include: {
-                members: true,
-            },
-        });
-        return teams;
-    
+          },
+        },
+        include: {
+          requiredRoles: true,
+          members: true,
+        },
+      });
+  
+      return teams;
     } catch (error) {
-        console.error(error);
-        throw new Error("Failed to get teams. Please enter a valid team id.");
+      console.error("Failed to get teams:", error);
+      throw new Error("Failed to get teams. Please enter a valid team id.");
     }
-}
+  }
 
 export async function joinTeam(userId, teamId) {
     try {

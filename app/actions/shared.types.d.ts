@@ -21,7 +21,23 @@ export interface User {
     members?: User[]; // Optional array of members
   }
   
+  interface RoleData {
+    roleTitle: string[];
+    skillNeeded: string[];
+  }
+  
+  export interface TeamData {
+    name: string;
+    description: string;
+    location: string;
+    requiredRoles: RoleData[];
+  }
 
+  export interface FilterParams {
+    location?: string;
+    roleTitle?: string[];
+    skillNeeded?: string[];
+  }
 
 export interface GetAllUsersParams {
   page?: number;
