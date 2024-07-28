@@ -1,16 +1,16 @@
 import React from 'react'
 
-// import Landing from "@/components/Landing";
 import Hero from "../../components/Hero";
+import Dashboard from "../../../components/Dashboard";
 
 
 const page = () => {
   return (
-    <div className='Home mt-8'>
+    <div>
 
-      {/* <Landing /> */}
-      <Hero />
-       main
+      {/* <Landing /> */} 
+      <Dashboard />
+
     </div>
   )
 }

@@ -4,6 +4,7 @@ const Hero = () => {
   return (
     <div className="relative bg-black min-h-screen overflow-hidden">
       {/* Navigation Bar */}
+      {/* we can add the href links once we make the other pages/views*/}
       <nav className="bg-black text-white fixed w-full flex items-center justify-between px-8 py-4 z-20 top-0 left-0">
         <div className="text-lg font-bold">Logo</div>
         <div className="flex space-x-4">
@@ -30,14 +31,14 @@ const Hero = () => {
          */}
         <div className="relative">
           <Spotlight
-            className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+            className="-top-40 -left-10 md:-left-32 md:-top-20 h-[110vh]"
             fill="white"
           />
           <Spotlight
-            className="h-[80vh] w-[50vw] top-10 left-[50vw]"
+            className="h-[100vh] w-[50vw] top-10 left-[50vw]"
             fill="purple"
           />
-          <Spotlight className="left-80 top-28 h-[80vh] w-[50vw]" fill="blue" />
+          <Spotlight className="left-80 top-28 h-[100vh] w-[50vw]" fill="blue" />
         </div>
 
         {/**
@@ -51,7 +52,6 @@ const Hero = () => {
         >
           {/* Radial gradient for the container to give a faded look */}
           <div
-            // change the bg to bg-black, so it matches the bg color and will blend in
             className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black
             bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"
           />
