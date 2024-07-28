@@ -1,20 +1,19 @@
-import React from 'react'
+import React from "react";
 
 // import Landing from "@/components/Landing";
 import Landing from "../../components/Landing";
+import HeroSection from "./_components/HeroSection";
+import Navbar from "@/app/components/Navbar";
+import SecondSection from "./_components/SecondSection";
 
-
-const page = () => {
+const Page = () => {
   return (
-    <div className='Home mt-8'>
-      <h1>HomPage Content goes here</h1>
-
-
-      {/* <Landing /> */}
-      <Landing />
-       main
+    <div className="min-h-screen">
+      <Navbar />
+      <HeroSection />
+      <SecondSection />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;
