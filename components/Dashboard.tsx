@@ -32,7 +32,7 @@ export default function Dashboard() {
       </header>
       <main className="p-4">
         <section className="p-6 bg-blue-200 rounded-md">
-          <h1 className="text-3xl font-bold">Welcome back, Adan Ayaz</h1>
+          <h1 className="text-3xl font-bold">Welcome back, Ryan Ni</h1>
           <div className="flex justify-between mt-4">
             <Card className="w-1/2 mr-2" onClick={() => router.push("/update-profile")}>
               <CardHeader>
